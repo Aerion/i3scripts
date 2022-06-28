@@ -46,18 +46,20 @@ from util import *
 # xprop (https://linux.die.net/man/1/xprop). Run `xprop | grep WM_CLASS`
 # then click on the application you want to inspect.
 WINDOW_ICONS = {
-    'kitty': '󰅬',
-    'firefox': '󰈹',
-    'Ferdi': '󰭻',
-    'signal': '󰭹',
-    'telegram-desktop': '󰍡',
-    'MellowPlayer': '󰎈',
-    'code': '󰅴',
-    'keepassxc': '󰌾',
-    'Mail': '󰻧',
-    'Msgcompose': '󰻣',
-    'DBeaver': '󰆼',
-    'floating-terminal': '󱃗',
+    "kitty": "󰞷",
+    "firefox": "󰈹",
+    "Ferdi": "󰭻",
+    "signal": "󰭹",
+    "telegram-desktop": "󰍡",
+    "MellowPlayer": "󰎈",
+    "code": "󰅴",
+    "keepassxc": "󰌾",
+    "Mail": "󰻧",
+    "Msgcompose": "󰻣",
+    "DBeaver": "󰆼",
+    "floating-terminal": "󰆍",
+    "brave-browser": "󰌀",
+    "chromium": "󰊯",
 }
 
 # This icon is used for any application not in the list above
