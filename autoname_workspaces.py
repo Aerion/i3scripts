@@ -63,7 +63,7 @@ WINDOW_ICONS = {
 }
 
 # This icon is used for any application not in the list above
-DEFAULT_ICON = '*'
+DEFAULT_ICON = "*"
 
 # Global setting that determines whether workspaces will be automatically
 # re-numbered in ascending order with a "gap" left on each monitor. This is
@@ -78,21 +78,20 @@ def ensure_window_icons_lowercase():
 
 def icon_for_window(window):
     # Try all window classes and use the first one we have an icon for
-    classes = xprop(window.window, 'WM_CLASS')
+    classes = xprop(window.window, "WM_CLASS")
     if classes != None and len(classes) > 0:
         for cls in classes:
             cls = cls.lower()  # case-insensitive matching
             if cls in WINDOW_ICONS:
                 return WINDOW_ICONS[cls]
-    logging.info('No icon available for window with classes: %s' %
-                 str(classes))
+    logging.info("No icon available for window with classes: %s" % str(classes))
     return DEFAULT_ICON
 
 
 # renames all workspaces based on the windows present
 # also renumbers them in ascending order, with one gap left between monitors
 # for example: workspace numbering on two monitors: [1, 2, 3], [5, 6]
-def rename_workspaces(i3, icon_list_format='default'):
+def rename_workspaces(i3, icon_list_format="default"):
     ws_infos = i3.get_workspaces()
     prev_output = None
     n = 1
@@ -114,13 +113,11 @@ def rename_workspaces(i3, icon_list_format='default'):
         n += 1
 
         new_name = construct_workspace_name(
-            NameParts(num=new_num,
-                      shortname=name_parts.shortname,
-                      icons=new_icons))
+            NameParts(num=new_num, shortname=name_parts.shortname, icons=new_icons)
+        )
         if workspace.name == new_name:
             continue
-        i3.command('rename workspace "%s" to "%s"' %
-                   (workspace.name, new_name))
+        i3.command('rename workspace "%s" to "%s"' % (workspace.name, new_name))
 
 
 # Rename workspaces to just numbers and shortnames, removing the icons.
@@ -128,37 +125,35 @@ def on_exit(i3):
     for workspace in i3.get_tree().workspaces():
         name_parts = parse_workspace_name(workspace.name)
         new_name = construct_workspace_name(
-            NameParts(num=name_parts.num,
-                      shortname=name_parts.shortname,
-                      icons=None))
+            NameParts(num=name_parts.num, shortname=name_parts.shortname, icons=None)
+        )
         if workspace.name == new_name:
             continue
-        i3.command('rename workspace "%s" to "%s"' %
-                   (workspace.name, new_name))
+        i3.command('rename workspace "%s" to "%s"' % (workspace.name, new_name))
     i3.main_quit()
     sys.exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description=
-        "Rename workspaces dynamically to show icons for running programs.")
-    parser.add_argument(
-        '--norenumber_workspaces',
-        action='store_true',
-        default=False,
-        help=
-        "Disable automatic workspace re-numbering. By default, workspaces are automatically re-numbered in ascending order."
+        description="Rename workspaces dynamically to show icons for running programs."
     )
     parser.add_argument(
-        '--icon_list_format',
+        "--norenumber_workspaces",
+        action="store_true",
+        default=False,
+        help="Disable automatic workspace re-numbering. By default, workspaces are automatically re-numbered in ascending order.",
+    )
+    parser.add_argument(
+        "--icon_list_format",
         type=str,
-        default='default',
+        default="default",
         help="The formatting of the list of icons."
         "Accepted values:"
         "    - default: no formatting,"
         "    - mathematician: factorize with superscripts (e.g. aababa -> a⁴b²),"
-        "    - chemist: factorize with subscripts (e.g. aababa -> a₄b₂).")
+        "    - chemist: factorize with subscripts (e.g. aababa -> a₄b₂).",
+    )
     args = parser.parse_args()
 
     RENUMBER_WORKSPACES = not args.norenumber_workspaces
@@ -177,9 +172,9 @@ if __name__ == '__main__':
 
     # Call rename_workspaces() for relevant window events
     def event_handler(i3, e):
-        if e.change in ['new', 'close', 'move']:
+        if e.change in ["new", "close", "move"]:
             rename_workspaces(i3, icon_list_format=args.icon_list_format)
 
-    i3.on('window', event_handler)
-    i3.on('workspace::move', event_handler)
+    i3.on("window", event_handler)
+    i3.on("workspace::move", event_handler)
     i3.main()
