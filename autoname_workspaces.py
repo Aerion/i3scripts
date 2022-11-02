@@ -60,6 +60,9 @@ WINDOW_ICONS = {
     "floating-terminal": "󰆍",
     "brave-browser": "󰌀",
     "chromium": "󰊯",
+    "slack": "󰒱",
+    "soom": "󰖠",
+    "jetbrains-rider": "󰘦",
 }
 
 # This icon is used for any application not in the list above
